@@ -1,6 +1,7 @@
 package cassandra
 
 import (
+	"githab.com/spayder/bookstore_oauth-api/src/utils/config"
 	"github.com/gocql/gocql"
 )
 
@@ -9,8 +10,8 @@ var (
 )
 
 func init() {
-	cluster = gocql.NewCluster("127.0.0.1")
-	cluster.Keyspace = "oauth"
+	cluster = gocql.NewCluster(config.Env("DB_HOST"))
+	cluster.Keyspace = config.Env("DB_NAME")
 	cluster.Consistency = gocql.Quorum
 }
 

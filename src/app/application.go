@@ -5,6 +5,7 @@ import (
 	"githab.com/spayder/bookstore_oauth-api/src/domain/access_token"
 	"githab.com/spayder/bookstore_oauth-api/src/domain/repository/db"
 	"githab.com/spayder/bookstore_oauth-api/src/http"
+	"githab.com/spayder/bookstore_oauth-api/src/utils/config"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,7 +21,8 @@ func Handle() {
 
 	router.GET("/oauth/access_token/:access_token_id", handler.GetById)
 
-	router.Run(":8092")
+	port := ":" + config.Env("APP_PORT")
+	router.Run(port)
 }
 
 func initDB() {
