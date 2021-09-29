@@ -6,15 +6,20 @@ import (
 )
 
 var (
-	cluster *gocql.ClusterConfig
+	session *gocql.Session
 )
 
 func init() {
-	cluster = gocql.NewCluster(config.Env("DB_HOST"))
+	cluster := gocql.NewCluster(config.Env("DB_HOST"))
 	cluster.Keyspace = config.Env("DB_NAME")
 	cluster.Consistency = gocql.Quorum
+
+	var err error
+	if session, err = cluster.CreateSession(); err != nil {
+		panic(err)
+	}
 }
 
-func GetSession() (*gocql.Session, error) {
-	return cluster.CreateSession()
+func GetSession() *gocql.Session {
+	return session
 }
